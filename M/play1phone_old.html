@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <title>Sport B@ttle</title>
+    <script>
+        var finish;
+
+        var c;
+        var ctx;
+
+        var newgo1;
+        var newgo2;
+        var newgo3;
+        var newgo4;
+        var newgo5;
+
+        var newgo;
+
+        var x;
+        var y;
+        var nowx;
+        var nowy;
+
+        function initial() {
+            //禁止滑動整個頁面
+            document.ontouchmove = function (e) {
+                e.preventDefault();
+            };
+            document.documentElement.style.webkitTouchCallout = "none";
+
+            whichplayer();
+            //把變數跟五種箭頭圖片連結
+            newgo1 = document.getElementById("newgo1");
+            newgo2 = document.getElementById("newgo2");
+            newgo3 = document.getElementById("newgo3");
+            newgo4 = document.getElementById("newgo4");
+            newgo5 = document.getElementById("newgo5");
+
+            //把變數跟canvas的各種物件連結
+            c = document.getElementById("myCanvas");
+            ctx = c.getContext("2d");
+
+            //把newgo1這張圖畫在canvas的座標(0,0)的位置
+            ctx.drawImage(newgo1, 0, 0);
+            newgo = 1;
+            finish = 0;
+        }
+
+        function touchevent() {
+            //把點下去的第一個點的y座標存到y
+            document.getElementById("myCanvas").addEventListener("touchstart", function (event) {
+                y = Math.floor(event.touches[0].pageY);
+            }, false);
+
+            //每滑動一單位就把現在這個點的y座標存到nowy
+            document.getElementById("myCanvas").addEventListener("touchmove", function (event) {
+                nowy = Math.floor(event.touches[0].pageY);
+
+                //往下滑40個單位而且還沒到終點
+                if (nowy - y > 40 && finish != 1) {
+
+                    //這裡傳值給web.html的run這個function
+                    socket.emit("phone let game01 run");
+                    //假設傳的值是10而且是player1傳的就是run(10,1)
+                    //假設傳的值是10而且是player2傳的就是run(10,2)
+                    //假設傳的值是10而且是player3傳的就是run(10,3)
+
+
+                    //每滑40就改變箭頭的圖片
+                    if (newgo == 1) {
+                        ctx.drawImage(newgo2, 0, 0);
+                        newgo = 2;
+                    } else if (newgo == 2) {
+                        ctx.drawImage(newgo3, 0, 0);
+                        newgo = 3;
+                    } else if (newgo == 3) {
+                        ctx.drawImage(newgo4, 0, 0);
+                        newgo = 4;
+                    } else if (newgo == 4) {
+                        ctx.drawImage(newgo5, 0, 0);
+                        newgo = 5;
+                    }
+
+                    y = nowy;
+                }
+            }, false);
+
+            //放開手指之後把箭頭回復成沒有黑色的樣子
+            document.getElementById("myCanvas").addEventListener("touchend", function (event) {
+                ctx.drawImage(newgo1, 0, 0);
+                newgo = 1;
+            }, false);
+        }
+
+        function arriveend() {
+            //把目前的頁面轉換成arriveend.html的頁面
+            finish = 1;
+            location.href = "arriveend.html?key=" + getValue("key") + "&userNo=" + getValue("userNo");
+        }
+
+        function getValue(varname) {
+            var url = window.location.href;
+            var qparts = url.split("?");
+            if (qparts.length == 0) {
+                return "";
+            }
+            var query = qparts[1];
+            var vars = query.split("&");
+            var value = "";
+            for (i = 0; i < vars.length; i++) {
+                var parts = vars[i].split("=");
+                if (parts[0] == varname) {
+                    value = parts[1];
+                    break;
+                }
+            }
+            return value;
+        }
+
+        function whichplayer() {
+            document.getElementById('p1').innerHTML = "player " + getValue("userNo");
+        }
+    </script>
+
+    <style>
+        #newgo1 {
+            width: 100px;
+            height: 300px;
+            display: none;
+        }
+        
+        #newgo2 {
+            width: 100px;
+            height: 300px;
+            display: none;
+        }
+        
+        #newgo3 {
+            width: 100px;
+            height: 300px;
+            display: none;
+        }
+        
+        #newgo4 {
+            width: 100px;
+            height: 300px;
+            display: none;
+        }
+        
+        #newgo5 {
+            width: 100px;
+            height: 300px;
+            display: none;
+        }
+        
+        #div1 {
+            text-align: center;
+        }
+        
+        #p1 {
+            font-size: 50px;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body onload="initial(), touchevent()">
+
+    <p id="p1"></p>
+
+    <div id="div1">
+        <canvas id="myCanvas" width="100" height="300" style="border:1px solid #000000;">Your browser does not support the HTML5 canvas tag.</canvas>
+    </div>
+
+    <img id="newgo1" src="/picture/newgo1.jpg">
+    <img id="newgo2" src="/picture/newgo2.jpg">
+    <img id="newgo3" src="/picture/newgo3.jpg">
+    <img id="newgo4" src="/picture/newgo4.jpg">
+    <img id="newgo5" src="/picture/newgo5.jpg">
+
+    <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+    <script>
+        // http://localhost:8080
+        // ws://chatroom-10227cycu.rhcloud.com:8000/
+        var socket = io.connect('ws://chatroom-10227cycu.rhcloud.com:8000/');
+        var key = getValue("key");
+        var userNo = getValue("userNo");
+
+        socket.emit("phone enter game01", key, userNo);
+
+        socket.on("take a rest", function (userNo) {
+            if (userNo == getValue("userNo")) arriveend();
+        });
+    </script>
+
+</body>
+
+</html>

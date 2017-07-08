@@ -1,0 +1,392 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sport B@ttle</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>
+        var player = [];
+        var step = [];
+        var count = [];
+        var posegif = [];
+        var pose1 = [];
+        var poseani = [];
+        var moveani = [];
+
+        var playerhave = [false, false, false];
+
+        var ready2play = false;
+
+        function initial() {
+            if (getValue("player1") == 1) {
+                player[1] = document.getElementById("p1");
+                pose1[1] = "picture/orange_stand.png";
+                posegif[1] = "picture/orange_move.gif";
+                step[1] = 0;
+                count[1] = 0;
+                player[1].style.display = "inline";
+
+            }
+            if (getValue("player2") == 1) {
+                player[2] = document.getElementById("p2");
+                pose1[2] = "picture/p2pose1.png";
+                posegif[2] = "picture/p2posegif.gif";
+                step[2] = 0;
+                count[2] = 0;
+                player[2].style.display = "inline";
+
+            }
+            if (getValue("player3") == 1) {
+                player[3] = document.getElementById("p3");
+                pose1[3] = "picture/p3pose1.png";
+                posegif[3] = "picture/p3posegif.gif";
+                step[3] = 0;
+                count[3] = 0;
+                player[3].style.display = "inline";
+
+            }
+        }
+
+        function run(num, whichplayer) {
+            if (step[whichplayer] < 850) {
+
+                if (!playerhave[whichplayer - 1]) playerhave[whichplayer - 1] = true;
+                if (count[whichplayer] == 0) player[whichplayer].src = posegif[whichplayer];
+                count[whichplayer] = count[whichplayer] + num;
+
+                if (count[whichplayer] > 10) clearInterval(moveani[whichplayer]);
+                if (count[whichplayer] <= 10) moveani[whichplayer] = setInterval(speed1, 15);
+                else if (count[whichplayer] > 10 && count[whichplayer] <= 40) moveani[whichplayer] = setInterval(speed2, 15);
+                else if (count[whichplayer] > 40 && count[whichplayer] <= 70) moveani[whichplayer] = setInterval(speed3, 15);
+                else if (count[whichplayer] > 70 && count[whichplayer] <= 100) moveani[whichplayer] = setInterval(speed4, 10);
+                else if (count[whichplayer] > 100 && count[whichplayer] <= 130) moveani[whichplayer] = setInterval(speed5, 10);
+                else if (count[whichplayer] > 130 && count[whichplayer] <= 160) moveani[whichplayer] = setInterval(speed6, 10);
+                else if (count[whichplayer] > 160 && count[whichplayer] <= 190) moveani[whichplayer] = setInterval(speed7, 5);
+                else if (count[whichplayer] > 190 && count[whichplayer] <= 220) moveani[whichplayer] = setInterval(speed8, 5);
+                else if (count[whichplayer] > 220) moveani[whichplayer] = setInterval(speed9, 5);
+            }
+
+            function speed1() {
+                if (count[whichplayer] == 0) {
+                    clearInterval(moveani[whichplayer]);
+                    player[whichplayer].src = pose1[whichplayer];
+                } else if (count[whichplayer] > 0) {
+                    if (step[whichplayer] + 0.1 >= 850) {
+                        step[whichplayer] = 850;
+                        clearInterval(moveani[whichplayer]);
+                        player[whichplayer].src = pose1[whichplayer];
+                        alreadyend();
+                    } else {
+                        step[whichplayer] = step[whichplayer] + 0.1;
+                        player[whichplayer].style.left = step[whichplayer] + "px";
+                        count[whichplayer]--;
+                    }
+                }
+            }
+
+            function speed2() {
+                if (count[whichplayer] == 0) {
+                    clearInterval(moveani[whichplayer]);
+                    player[whichplayer].src = pose1[whichplayer];
+                } else if (count[whichplayer] <= 10) {
+                    clearInterval(moveani[whichplayer]);
+                    moveani[whichplayer] = setInterval(speed1, 15);
+                } else if (count[whichplayer] > 10) {
+                    if (step[whichplayer] + 0.2 >= 850) {
+                        step[whichplayer] = 850;
+                        clearInterval(moveani[whichplayer]);
+                        player[whichplayer].src = pose1[whichplayer];
+                        alreadyend();
+                    } else {
+                        step[whichplayer] = step[whichplayer] + 0.2;
+                        player[whichplayer].style.left = step[whichplayer] + "px";
+                        count[whichplayer]--;
+                    }
+                }
+            }
+
+            function speed3() {
+                if (count[whichplayer] == 0) {
+                    clearInterval(moveani[whichplayer]);
+                    player[whichplayer].src = pose1[whichplayer];
+                } else if (count[whichplayer] <= 40) {
+                    clearInterval(moveani[whichplayer]);
+                    moveani[whichplayer] = setInterval(speed2, 15);
+                } else if (count[whichplayer] > 40) {
+                    if (step[whichplayer] + 0.3 >= 850) {
+                        step[whichplayer] = 850;
+                        clearInterval(moveani[whichplayer]);
+                        player[whichplayer].src = pose1[whichplayer];
+                        alreadyend();
+                    } else {
+                        step[whichplayer] = step[whichplayer] + 0.3;
+                        player[whichplayer].style.left = step[whichplayer] + "px";
+                        count[whichplayer]--;
+                    }
+                }
+            }
+
+            function speed4() {
+                if (count[whichplayer] == 0) {
+                    clearInterval(moveani[whichplayer]);
+                    player[whichplayer].src = pose1[whichplayer];
+                } else if (count[whichplayer] <= 70) {
+                    clearInterval(moveani[whichplayer]);
+                    moveani[whichplayer] = setInterval(speed3, 15);
+                } else if (count[whichplayer] > 70) {
+                    if (step[whichplayer] + 0.4 >= 850) {
+                        step[whichplayer] = 850;
+                        clearInterval(moveani[whichplayer]);
+                        player[whichplayer].src = pose1[whichplayer];
+                        alreadyend();
+                    } else {
+                        step[whichplayer] = step[whichplayer] + 0.4;
+                        player[whichplayer].style.left = step[whichplayer] + "px";
+                        count[whichplayer]--;
+                    }
+                }
+            }
+
+            function speed5() {
+                if (count[whichplayer] == 0) {
+                    clearInterval(moveani[whichplayer]);
+                    player[whichplayer].src = pose1[whichplayer];
+                } else if (count[whichplayer] <= 100) {
+                    clearInterval(moveani[whichplayer]);
+                    moveani[whichplayer] = setInterval(speed4, 10);
+                } else if (count[whichplayer] > 100) {
+                    if (step[whichplayer] + 0.5 >= 850) {
+                        step[whichplayer] = 850;
+                        clearInterval(moveani[whichplayer]);
+                        player[whichplayer].src = pose1[whichplayer];
+                        alreadyend();
+                    } else {
+                        step[whichplayer] = step[whichplayer] + 0.5;
+                        player[whichplayer].style.left = step[whichplayer] + "px";
+                        count[whichplayer]--;
+                    }
+                }
+            }
+
+            function speed6() {
+                if (count[whichplayer] == 0) {
+                    clearInterval(moveani[whichplayer]);
+                    player[whichplayer].src = pose1[whichplayer];
+                } else if (count[whichplayer] <= 130) {
+                    clearInterval(moveani[whichplayer]);
+                    moveani[whichplayer] = setInterval(speed5, 10);
+                } else if (count[whichplayer] > 130) {
+                    if (step[whichplayer] + 0.6 >= 850) {
+                        step[whichplayer] = 850;
+                        clearInterval(moveani[whichplayer]);
+                        player[whichplayer].src = pose1[whichplayer];
+                        alreadyend();
+                    } else {
+                        step[whichplayer] = step[whichplayer] + 0.6;
+                        player[whichplayer].style.left = step[whichplayer] + "px";
+                        count[whichplayer]--;
+                    }
+                }
+            }
+
+            function speed7() {
+                if (count[whichplayer] == 0) {
+                    clearInterval(moveani[whichplayer]);
+                    player[whichplayer].src = pose1[whichplayer];
+                } else if (count[whichplayer] <= 160) {
+                    clearInterval(moveani[whichplayer]);
+                    moveani[whichplayer] = setInterval(speed6, 10);
+                } else if (count[whichplayer] > 160) {
+                    if (step[whichplayer] + 0.7 >= 850) {
+                        step[whichplayer] = 850;
+                        clearInterval(moveani[whichplayer]);
+                        player[whichplayer].src = pose1[whichplayer];
+                        alreadyend();
+                    } else {
+                        step[whichplayer] = step[whichplayer] + 0.7;
+                        player[whichplayer].style.left = step[whichplayer] + "px";
+                        count[whichplayer]--;
+                    }
+                }
+            }
+
+            function speed8() {
+                if (count[whichplayer] == 0) {
+                    clearInterval(moveani[whichplayer]);
+                    player[whichplayer].src = pose1[whichplayer];
+                } else if (count[whichplayer] <= 190) {
+                    clearInterval(moveani[whichplayer]);
+                    moveani[whichplayer] = setInterval(speed7, 5);
+                } else if (count[whichplayer] > 190) {
+                    if (step[whichplayer] + 0.8 >= 850) {
+                        step[whichplayer] = 850;
+                        clearInterval(moveani[whichplayer]);
+                        player[whichplayer].src = pose1[whichplayer];
+                        alreadyend();
+                    } else {
+                        step[whichplayer] = step[whichplayer] + 0.8;
+                        player[whichplayer].style.left = step[whichplayer] + "px";
+                        count[whichplayer]--;
+                    }
+                }
+            }
+
+            function speed9() {
+                if (count[whichplayer] == 0) {
+                    clearInterval(moveani[whichplayer]);
+                    player[whichplayer].src = pose1[whichplayer];
+                } else if (count[whichplayer] <= 220) {
+                    clearInterval(moveani[whichplayer]);
+                    moveani[whichplayer] = setInterval(speed8, 5);
+                } else if (count[whichplayer] > 220) {
+                    if (step[whichplayer] + 0.9 >= 850) {
+                        step[whichplayer] = 850;
+                        clearInterval(moveani[whichplayer]);
+                        player[whichplayer].src = pose1[whichplayer];
+                        alreadyend();
+                    } else {
+                        step[whichplayer] = step[whichplayer] + 0.9;
+                        player[whichplayer].style.left = step[whichplayer] + "px";
+                        count[whichplayer]--;
+                    }
+                }
+            }
+
+            function alreadyend() {
+                if (step[whichplayer] >= 850) {
+                    if ((!playerhave[0] || step[1] >= 850) && (!playerhave[1] || step[2] >= 850) && (!playerhave[2] || step[3] >= 850)) {
+
+                        var ifplayerhave;
+
+                        if (playerhave[0]) ifplayerhave = "&have1=1";
+                        else ifplayerhave = "&have1=0";
+
+                        if (playerhave[1]) ifplayerhave += "&have2=1";
+                        else ifplayerhave += "&have2=0";
+
+                        if (playerhave[2]) ifplayerhave += "&have3=1";
+                        else ifplayerhave += "&have3=0";
+
+                        location.href = "game01.html?key=" + getValue("key") + ifplayerhave;
+                    }
+                }
+            }
+        }
+
+        function getValue(varname) {
+            var url = window.location.href;
+            var qparts = url.split("?");
+            if (qparts.length == 0) {
+                return "";
+            }
+            var query = qparts[1];
+            var vars = query.split("&");
+            var value = "";
+            for (i = 0; i < vars.length; i++) {
+                var parts = vars[i].split("=");
+                if (parts[0] == varname) {
+                    value = parts[1];
+                    break;
+                }
+            }
+            return value;
+        }
+    </script>
+
+    <link rel="stylesheet" href="game01.css">
+
+    <style>
+        #playground {
+            width: 1000px;
+            height: 500px;
+        }
+        
+        #p1 {
+            width: 90px;
+            height: 120px;
+            position: absolute;
+            top: 20px;
+            left: 0px;
+            display: none;
+        }
+        
+        #p2 {
+            width: 90px;
+            height: 120px;
+            position: absolute;
+            top: 190px;
+            left: 0px;
+            display: none;
+        }
+        
+        #p3 {
+            width: 90px;
+            height: 120px;
+            position: absolute;
+            top: 360px;
+            left: 0px;
+            display: none;
+        }
+        
+        #div0 {
+            margin-top: -25px;
+            height: 100px;
+            line-height: 100px;
+        }
+        
+        #div0 li {
+            display: inline-block;
+        }
+        
+        #div1 {
+            width: 1000px;
+            height: 500px;
+            margin-top: -10px;
+            left: 50%;
+            margin-left: -500px;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body background="picture/grass.jpg" onload="initial()">
+
+    <div id="div0" align="center">
+        <ul>
+            <li>
+                <img id="play12" src="picture/testing.png" height="50px" width="500px" align="middle">
+            </li>
+        </ul>
+    </div>
+
+    <div id="div1">
+        <img id="playground" src="/picture/playground.jpg">
+        <img id="p1" src="/picture/orange_stand.png">
+        <img id="p2" src="/picture/p2pose1.png">
+        <img id="p3" src="/picture/p3pose1.png">
+    </div>
+
+    <img src="/picture/1.png" width="300" height="500" id="pic1">
+    <img src="/picture/2.png" width="300" height="500" id="pic2">
+    <img src="/picture/3.png" width="300" height="500" id="pic3">
+
+    <script src="https://cdn.socket.io/socket.io-1.3.5.js">
+    </script>
+    <script>
+        // http://localhost:8080
+        // ws://chatroom-10227cycu.rhcloud.com:8000/
+        var socket = io.connect('ws://chatroom-10227cycu.rhcloud.com:8000/');
+
+        var key = getValue("key");
+
+        socket.emit("start game1", key);
+
+        socket.on("run run run", function (playNo) {
+            run(30, playNo);
+        });
+    </script>
+
+</body>
+
+</html>

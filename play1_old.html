@@ -1,0 +1,171 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+    <title>Sport B@ttle</title>
+    <script src="http://code.jquery.com/ui/1.8.21/jquery-ui.min.js"></script>
+    <script src="jquery.ui.touch-punch.min.js"></script>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    <script>
+        var a1 = 0;
+        var a2 = 0;
+
+        var run1 = 1;
+        var run2 = 1;
+
+        function function2() {
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            var img1 = document.getElementById("img1");
+            ctx.drawImage(img1, 0, 0);
+            var run1 = document.getElementById("run1");
+            ctx.drawImage(run1, 0, 120);
+
+            var c2 = document.getElementById("myCanvas2");
+            var c2tx = c2.getContext("2d");
+            var img2 = document.getElementById("img2");
+            c2tx.drawImage(img2, 0, 0);
+            var run2 = document.getElementById("run2");
+            c2tx.drawImage(run2, 0, 120);
+
+        }
+
+        function runrun1() {
+            a1 = a1 + 1;
+            var c = document.getElementById("myCanvas");
+            var ctx = c.getContext("2d");
+            var img1 = document.getElementById("img1");
+            ctx.drawImage(img1, 0, 0);
+            if (run1 == 1) {
+                var run12 = document.getElementById("run12");
+                ctx.drawImage(run12, a1, 120);
+                run1 = 2;
+            } else if (run1 == 2) {
+                var run11 = document.getElementById("run11");
+                ctx.drawImage(run11, a1, 120);
+                run1 = 1;
+            }
+            if (a1 > 800) {
+                document.location.href = "game_select.html?key=" + key;
+            }
+        }
+
+        function runrun2() {
+            a2 = a2 + 1;
+            var c2 = document.getElementById("myCanvas2");
+            var c2tx = c2.getContext("2d");
+            var img2 = document.getElementById("img2");
+            c2tx.drawImage(img2, 0, 0);
+            if (run2 == 1) {
+                var run22 = document.getElementById("run22");
+                c2tx.drawImage(run22, a2, 120);
+                run2 = 2;
+            } else if (run2 == 2) {
+                var run21 = document.getElementById("run21");
+                c2tx.drawImage(run21, a2, 120);
+                run2 = 1;
+            }
+        }
+
+        function getKey() {
+            var search = location.search;
+            var memkey = search.split("=");
+            var key = memkey[1];
+            return key;
+        }
+
+        var cot = 0; //計數
+        var t;
+
+        function timedCount() {
+            document.getElementById('txt').value = cot; //將c的值加入text
+            cot++; //時間+1
+            t = setTimeout("timedCount()", 1000); //每一秒變一次
+        }
+
+        function stopCount() {
+            clearTimeout(t); //停下來
+        }
+    </script>
+
+    <style>
+        #img1 {
+            width: 1000px;
+            height: 300px;
+            display: none;
+        }
+        
+        #run11 {
+            width: 100px;
+            height: 50px;
+            display: none;
+        }
+        
+        #run12 {
+            width: 100px;
+            height: 50px;
+            display: none;
+        }
+        
+        #img2 {
+            width: 1000px;
+            height: 300px;
+            display: none;
+        }
+        
+        #run21 {
+            width: 100px;
+            height: 50px;
+            display: none;
+        }
+        
+        #run22 {
+            width: 100px;
+            height: 50px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body onload="function2(), timedCount()">
+    <canvas id="myCanvas" width="1000" height="300" style="border:1px solid #000000;">Your browser does not support the HTML5 canvas tag.
+    </canvas>
+
+    <canvas id="myCanvas2" width="1000" height="300" style="border:1px solid #000000;"> Your browser does not support the HTML5 canvas tag.
+    </canvas>
+    <img id="img1" src="/picture/playground.jpg">
+    <img id="run11" src="/picture/run1.jpg">
+    <img id="run12" src="/picture/run2.jpg">
+
+    <img id="img2" src="/picture/playground.jpg">
+    <img id="run21" src="/picture/run1.jpg">
+    <img id="run22" src="/picture/run2.jpg">
+
+    <form>
+        <input type="button" value="Start count!" onClick="timedCount()">
+        <input type="text" id="txt">
+        <input type="button" value="Stop count!" onClick="stopCount()">
+    </form>
+
+    <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+
+    <script>
+        // http://localhost:8080
+        // ws://chatroom-10227cycu.rhcloud.com:8000/
+        var socket = io.connect('ws://chatroom-10227cycu.rhcloud.com:8000/');
+        var key = getKey();
+
+        socket.emit("start game1", key);
+
+        socket.on("run run run", function (userNo) {
+            if (userNo == 1) runrun1();
+            if (userNo == 2) runrun2();
+        });
+    </script>
+
+</body>
+
+</html>

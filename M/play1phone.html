@@ -1,0 +1,280 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title>Sport B@ttle</title>
+    <script>
+        var finish;
+        var c = [];
+        var ctx = [];
+
+        var newgo1;
+        var newgo2;
+        var newgo3;
+        var newgo4;
+        var newgo5;
+
+        var leftleg;
+        var rightleg;
+        var whichleg;
+
+        var y = [];
+        var nowy = [];
+
+        function initial() {
+            document.ontouchmove = function (e) {
+                e.preventDefault();
+            };
+            document.documentElement.style.webkitTouchCallout = "none";
+
+            whichplayer();
+
+            newgo1 = document.getElementById("newgo1");
+            newgo2 = document.getElementById("newgo2");
+            newgo3 = document.getElementById("newgo3");
+            newgo4 = document.getElementById("newgo4");
+            newgo5 = document.getElementById("newgo5");
+
+            c[0] = document.getElementById("myCanvas1");
+            ctx[0] = c[0].getContext("2d");
+
+            c[1] = document.getElementById("myCanvas2");
+            ctx[1] = c[1].getContext("2d");
+
+            ctx[0].drawImage(newgo1, 0, 0);
+            leftleg = 1;
+
+            ctx[1].drawImage(newgo5, 0, 0);
+            rightleg = 5;
+
+            whichleg = 0;
+
+            finish = 0;
+        }
+
+        function touchevent() {
+            document.getElementById("myCanvas1").addEventListener("touchstart", function (event) {
+                if (whichleg != 2 && leftleg < 5 && finish != 1) {
+                    whichleg = 1;
+                    y[0] = Math.floor(event.touches[0].pageY);
+                }
+            }, false);
+
+            document.getElementById("myCanvas2").addEventListener("touchstart", function (event) {
+                if (whichleg != 1 && rightleg < 5 && finish != 1) {
+                    whichleg = 2;
+                    y[1] = Math.floor(event.touches[0].pageY);
+                }
+            }, false);
+
+            document.getElementById("myCanvas1").addEventListener("touchmove", function (event) {
+                if (whichleg != 2 && leftleg < 5 && finish != 1) {
+
+                    nowy[0] = Math.floor(event.touches[0].pageY);
+                    if (nowy[0] - y[0] > 40) {
+
+                        //這裡傳值給web.html的run這個function
+                        //如果player1傳10就是run(10,1)
+                        //前面的數字越大就越快
+                        //正常遊戲是10
+                        socket.emit("phone let game01 run");
+
+
+
+                        legmoveone(1);
+                        y[0] = nowy[0];
+                    }
+                }
+            }, false);
+
+            document.getElementById("myCanvas2").addEventListener("touchmove", function (event) {
+                if (whichleg != 1 && rightleg < 5 && finish != 1) {
+
+                    nowy[1] = Math.floor(event.touches[0].pageY);
+                    if (nowy[1] - y[1] > 40) {
+
+                        //這裡傳值給web.html的run這個function
+                        //如果player1傳10就是run(10,1)
+                        //前面的數字越大就越快
+                        //正常遊戲是10
+                        socket.emit("phone let game01 run");
+
+
+
+                        legmoveone(2);
+                        y[1] = nowy[1];
+                    }
+                }
+            }, false);
+
+            document.getElementById("myCanvas1").addEventListener("touchend", function (event) {
+                whichleg = 0;
+            }, false);
+
+            document.getElementById("myCanvas2").addEventListener("touchend", function (event) {
+                whichleg = 0;
+            }, false);
+        }
+
+        function legmoveone(whichleg) {
+            if (whichleg == 1) {
+                leftleg = leftleg + 1;
+                if (leftleg == 2) {
+                    ctx[0].drawImage(newgo2, 0, 0);
+                    ctx[1].drawImage(newgo4, 0, 0);
+                    rightleg = 4;
+                } else if (leftleg == 3) {
+                    ctx[0].drawImage(newgo3, 0, 0);
+                    ctx[1].drawImage(newgo3, 0, 0);
+                    rightleg = 3;
+                } else if (leftleg == 4) {
+                    ctx[0].drawImage(newgo4, 0, 0);
+                    ctx[1].drawImage(newgo2, 0, 0);
+                    rightleg = 2;
+                } else if (leftleg == 5) {
+                    ctx[0].drawImage(newgo5, 0, 0);
+                    ctx[1].drawImage(newgo1, 0, 0);
+                    rightleg = 1;
+                }
+            } else if (whichleg == 2) {
+                rightleg = rightleg + 1;
+                if (rightleg == 2) {
+                    ctx[1].drawImage(newgo2, 0, 0);
+                    ctx[0].drawImage(newgo4, 0, 0);
+                    leftleg = 4;
+                } else if (rightleg == 3) {
+                    ctx[1].drawImage(newgo3, 0, 0);
+                    ctx[0].drawImage(newgo3, 0, 0);
+                    leftleg = 3;
+                } else if (rightleg == 4) {
+                    ctx[1].drawImage(newgo4, 0, 0);
+                    ctx[0].drawImage(newgo2, 0, 0);
+                    leftleg = 2;
+                } else if (rightleg == 5) {
+                    ctx[1].drawImage(newgo5, 0, 0);
+                    ctx[0].drawImage(newgo1, 0, 0);
+                    leftleg = 1;
+                }
+            }
+        }
+
+        function arriveend() {
+            //把目前的頁面轉換成arriveend.html的頁面
+            finish = 1;
+            location.href = "arriveend.html?key=" + getValue("key") + "&userNo=" + getValue("userNo");
+        }
+
+        function getValue(varname) {
+            var url = window.location.href;
+            var qparts = url.split("?");
+            if (qparts.length == 0) {
+                return "";
+            }
+            var query = qparts[1];
+            var vars = query.split("&");
+            var value = "";
+            for (i = 0; i < vars.length; i++) {
+                var parts = vars[i].split("=");
+                if (parts[0] == varname) {
+                    value = parts[1];
+                    break;
+                }
+            }
+            return value;
+        }
+
+        function whichplayer() {
+            document.getElementById('p1').innerHTML = "player " + getValue("userNo");
+        }
+    </script>
+
+    <style>
+        #div2 {
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        #myCanvas1 {
+            margin-left: 20px;
+            float: left;
+            background-color: white;
+        }
+        
+        #myCanvas2 {
+            margin-right: 20px;
+            float: right;
+            background-color: white;
+        }
+        
+        #newgo1 {
+            width: 100px;
+            height: 300px;
+            display: none;
+        }
+        
+        #newgo2 {
+            width: 100px;
+            height: 300px;
+            display: none;
+        }
+        
+        #newgo3 {
+            width: 100px;
+            height: 300px;
+            display: none;
+        }
+        
+        #newgo4 {
+            width: 100px;
+            height: 300px;
+            display: none;
+        }
+        
+        #newgo5 {
+            width: 100px;
+            height: 300px;
+            display: none;
+        }
+        
+        #p1 {
+            font-size: 30px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body onload="initial(), touchevent()">
+
+    <p id="p1"></p>
+
+    <div id="div2">
+        <canvas id="myCanvas1" width="100" height="300" style="border:1px solid #000000;">Your browser does not support the HTML5 canvas tag.</canvas>
+        <canvas id="myCanvas2" width="100" height="300" style="border:1px solid #000000;">Your browser does not support the HTML5 canvas tag.</canvas>
+    </div>
+
+    <img id="newgo1" src="/picture/newgo1.png">
+    <img id="newgo2" src="/picture/newgo2.png">
+    <img id="newgo3" src="/picture/newgo3.png">
+    <img id="newgo4" src="/picture/newgo4.png">
+    <img id="newgo5" src="/picture/newgo5.png">
+
+    <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+    <script>
+        // http://localhost:8080
+        // ws://chatroom-10227cycu.rhcloud.com:8000/
+        var socket = io.connect('ws://chatroom-10227cycu.rhcloud.com:8000/');
+        var key = getValue("key");
+        var userNo = getValue("userNo");
+
+        socket.emit("phone enter game01", key, userNo);
+
+        socket.on("take a rest", function (userNo) {
+            if (userNo == getValue("userNo")) arriveend();
+        });
+    </script>
+
+</body>
+
+</html>

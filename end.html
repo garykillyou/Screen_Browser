@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<html>
+
+<head>
+    <link rel="icon" href="picture/icon.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="end.css">
+    <title>Sport B@ttle</title>
+
+    <script>
+        function getValue(varname) {
+            var url = window.location.href;
+            var qparts = url.split("?");
+            if (qparts.length == 0) {
+                return "";
+            }
+            var query = qparts[1];
+            var vars = query.split("&");
+            var value = "";
+            for (i = 0; i < vars.length; i++) {
+                var parts = vars[i].split("=");
+                if (parts[0] == varname) {
+                    value = parts[1];
+                    break;
+                }
+            }
+            return value;
+        }
+
+        function change2game_select() {
+            var url = "game_select.html?key=" + getValue("key");
+
+            if (getValue("player1") == 12000) url = url + "&player1" + "=0";
+            else url = url + "&player1" + "=1";
+            if (getValue("player2") == 12000) url = url + "&player2" + "=0";
+            else url = url + "&player2" + "=1";
+            if (getValue("player3") == 12000) url = url + "&player1" + "=0";
+            else url = url + "&player3" + "=1";
+
+            location.href = url;
+        }
+    </script>
+</head>
+
+<body>
+    <div id="top">
+        <img src="picture/end1.png" alt="End" height="180px" width="400px" style="display:block; margin: 100px auto auto;">
+    </div>
+    <div id="content">
+        <br>
+        <br>
+        <table align="center" cellpadding="10" width="600" id="tab">
+            <tr>
+                <th class="w1">名次</th>
+                <th class="w1">玩家</th>
+                <th class="w1">完成時間</th>
+            </tr>
+            <tr>
+                <th class="w1" id="l1"> 1 </th>
+                <th class="w2" id="n1"></th>
+                <th class="w2" id="t1"></th>
+            </tr>
+            <tr>
+                <th class="w1" id="l2"> 2 </th>
+                <th class="w2" id="n2"></th>
+                <th class="w2" id="t2"></th>
+            </tr>
+            <tr>
+                <th class="w1" id="l3"> 3 </th>
+                <th class="w2" id="n3"></th>
+                <th class="w2" id="t3"></th>
+            </tr>
+        </table>
+        <br>
+        <br>
+    </div>
+    <div id="foot">
+        <br>
+        <button style="width:300px;height:60px;font-size:30px;font-family: Microsoft JhengHei;
+    font-weight: bold;" onclick="change2game_select()"><b>至遊戲選擇</b></button>
+    </div>
+
+    <script>
+        var one = "P1";
+        var two = "P2";
+        var three = "P3"; // 遊玩者名子
+
+        var onet = parseFloat(getValue("player1"));
+        var twot = parseFloat(getValue("player2"));
+        var threet = parseFloat(getValue("player3")); // 時間
+
+        var a1 = parseFloat(getValue("m1"));
+        var a2 = parseFloat(getValue("s1"));
+        var a3 = parseFloat(getValue("ms1"));
+        var b1 = parseFloat(getValue("m2"));
+        var b2 = parseFloat(getValue("s2"));
+        var b3 = parseFloat(getValue("ms2"));
+        var c1 = parseFloat(getValue("m3"));
+        var c2 = parseFloat(getValue("s3"));
+        var c3 = parseFloat(getValue("ms3"));
+        var t;
+
+        function out31() {
+            if (c1 == 0 && c2 == 0) document.getElementById('t1').innerHTML = "'" + c3;
+            else if (c1 == 0 && c2 != 0) document.getElementById('t1').innerHTML = c2 + " 秒 " + "'" + c3;
+            else if (c1 != 0 && c2 == 0) document.getElementById('t1').innerHTML = c1 + "  分 " + "'" + c3;
+            else document.getElementById('t1').innerHTML = c1 + "  分 " + c2 + " 秒 " + "'" + c3;
+        }
+
+        function out32() {
+            if (c1 == 0 && c2 == 0) document.getElementById('t2').innerHTML = "'" + c3;
+            else if (c1 == 0 && c2 != 0) document.getElementById('t2').innerHTML = c2 + " 秒 " + "'" + c3;
+            else if (c1 != 0 && c2 == 0) document.getElementById('t2').innerHTML = c1 + "  分 " + "'" + c3;
+            else document.getElementById('t2').innerHTML = c1 + "  分 " + c2 + " 秒 " + "'" + c3;
+        }
+
+        function out33() {
+            if (c1 == 0 && c2 == 0) document.getElementById('t3').innerHTML = "'" + c3;
+            else if (c1 == 0 && c2 != 0) document.getElementById('t3').innerHTML = c2 + " 秒 " + "'" + c3;
+            else if (c1 != 0 && c2 == 0) document.getElementById('t3').innerHTML = c1 + "  分 " + "'" + c3;
+            else document.getElementById('t3').innerHTML = c1 + "  分 " + c2 + " 秒 " + "'" + c3;
+        }
+
+        function out21() {
+            if (b1 == 0 && b2 == 0) document.getElementById('t1').innerHTML = "'" + b3;
+            else if (b1 == 0 && b2 != 0) document.getElementById('t1').innerHTML = b2 + " 秒 " + "'" + b3;
+            else if (b1 != 0 && b2 == 0) document.getElementById('t1').innerHTML = b1 + "  分 " + "'" + b3;
+            else document.getElementById('t1').innerHTML = b1 + "  分 " + b2 + " 秒 " + "'" + b3;
+        }
+
+        function out22() {
+            if (b1 == 0 && b2 == 0) document.getElementById('t2').innerHTML = "'" + b3;
+            else if (b1 == 0 && b2 != 0) document.getElementById('t2').innerHTML = b2 + " 秒 " + "'" + b3;
+            else if (b1 != 0 && b2 == 0) document.getElementById('t2').innerHTML = b1 + "  分 " + "'" + b3;
+            else document.getElementById('t2').innerHTML = b1 + "  分 " + b2 + " 秒 " + "'" + b3;
+        }
+
+        function out23() {
+            if (b1 == 0 && b2 == 0) document.getElementById('t3').innerHTML = "'" + b3;
+            else if (b1 == 0 && b2 != 0) document.getElementById('t3').innerHTML = b2 + " 秒 " + "'" + b3;
+            else if (b1 != 0 && b2 == 0) document.getElementById('t3').innerHTML = b1 + "  分 " + "'" + b3;
+            else document.getElementById('t3').innerHTML = b1 + "  分 " + b2 + " 秒 " + "'" + b3;
+        }
+
+        function out11() {
+            if (a1 == 0 && a2 == 0) document.getElementById('t1').innerHTML = "'" + a3;
+            else if (a1 == 0 && a2 != 0) document.getElementById('t1').innerHTML = a2 + " 秒 " + "'" + a3;
+            else if (a1 != 0 && a2 == 0) document.getElementById('t1').innerHTML = a1 + "  分 " + "'" + a3;
+            else document.getElementById('t1').innerHTML = a1 + "  分 " + a2 + " 秒 " + "'" + a3;
+        }
+
+        function out12() {
+            if (a1 == 0 && a2 == 0) document.getElementById('t2').innerHTML = "'" + a3;
+            else if (a1 == 0 && a2 != 0) document.getElementById('t2').innerHTML = a2 + " 秒 " + "'" + a3;
+            else if (a1 != 0 && a2 == 0) document.getElementById('t2').innerHTML = a1 + "  分 " + "'" + a3;
+            else document.getElementById('t2').innerHTML = a1 + "  分 " + a2 + " 秒 " + "'" + a3;
+        }
+
+        function out13() {
+            if (a1 == 0 && a2 == 0) document.getElementById('t3').innerHTML = "'" + a3;
+            else if (a1 == 0 && a2 != 0) document.getElementById('t3').innerHTML = a2 + " 秒 " + "'" + a3;
+            else if (a1 != 0 && a2 == 0) document.getElementById('t3').innerHTML = a1 + "  分 " + "'" + a3;
+            else document.getElementById('t3').innerHTML = a1 + "  分 " + a2 + " 秒 " + "'" + a3;
+        }
+
+
+        if (onet > twot) {
+            if (threet > onet) {
+                document.getElementById("l3").innerHTML = "3";
+                document.getElementById("n3").innerHTML = three;
+                t = out33();
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = one;
+                t = out12();
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = two;
+                t = out21();
+            } else if (twot > threet) {
+                document.getElementById("l3").innerHTML = "3";
+                document.getElementById("n3").innerHTML = one;
+                t = out13();
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = two;
+                t = out22();
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = three;
+                t = out31();
+            } else if (twot < threet) {
+                document.getElementById("l3").innerHTML = "3";
+                document.getElementById("n3").innerHTML = one;
+                t = out13();
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = three;
+                t = out32();
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = two;
+                t = out21();
+            } else if (twot == threet) {
+                document.getElementById("l3").innerHTML = "2";
+                document.getElementById("n3").innerHTML = one;
+                t = out13();
+                document.getElementById("l2").innerHTML = "1";
+                document.getElementById("n2").innerHTML = two;
+                t = out22();
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = three;
+                t = out31();
+            } else if (onet == threet) {
+                document.getElementById("l3").innerHTML = "2";
+                document.getElementById("n3").innerHTML = one;
+                t = out13();
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = three;
+                t = out32();
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = two;
+                t = out21();
+            }
+        } else if (twot > threet) {
+            if (threet > onet) {
+                document.getElementById("l3").innerHTML = "3";
+                document.getElementById("n3").innerHTML = two;
+                t = out23();
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = three;
+                t = out32();
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = one;
+                t = out11();
+            } else if (onet > threet) {
+                document.getElementById("l3").innerHTML = "3";
+                document.getElementById("n3").innerHTML = two;
+                t = out23();
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = one;
+                t = out12();
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = three;
+                t = out31();
+            } else if (onet == threet) {
+                document.getElementById("l3").innerHTML = "2";
+                document.getElementById("n3").innerHTML = two;
+                t = out23();
+                document.getElementById("l2").innerHTML = "1";
+                document.getElementById("n2").innerHTML = one;
+                t = out12();
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = three;
+                t = out31();
+            } else if (onet == twot) {
+                document.getElementById("l3").innerHTML = "2";
+                document.getElementById("n3").innerHTML = two;
+                t = out23();
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = one;
+                t = out12();
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = three;
+                t = out31();
+            }
+        } else if (threet > twot) {
+            if (twot > onet) {
+                document.getElementById("l3").innerHTML = "3";
+                document.getElementById("n3").innerHTML = three;
+                t = out33();
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = two;
+                t = out22();
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = one;
+                t = out11();
+            } else if (onet == twot) {
+                document.getElementById("l3").innerHTML = "2";
+                document.getElementById("n3").innerHTML = three;
+                t = out32();
+                document.getElementById("l2").innerHTML = "1";
+                document.getElementById("n2").innerHTML = one;
+                t = out12();
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = two;
+                t = out21();
+            }
+        } else if (onet == twot) {
+            if (onet == threet) {
+                document.getElementById("l3").innerHTML = "1";
+                document.getElementById("n3").innerHTML = three;
+                t = out33();
+                document.getElementById("l2").innerHTML = "1";
+                document.getElementById("n2").innerHTML = two;
+                t = out22();
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = one;
+                t = out11();
+
+            }
+        } else if (threet == twot) {
+            if (onet > threet) {
+                document.getElementById("l3").innerHTML = "2";
+                document.getElementById("n3").innerHTML = one;
+                t = out13();
+                document.getElementById("l2").innerHTML = "1";
+                document.getElementById("n2").innerHTML = two;
+                t = out22();
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = three;
+                t = out11();
+
+            } else if (onet < threet) {
+                document.getElementById("l3").innerHTML = "2";
+                document.getElementById("n3").innerHTML = three;
+                t = out33();
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = two;
+                t = out22();
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = one;
+                t = out11();
+
+            }
+        } else if (onet == twot) {
+            if (twot < threet) {
+                document.getElementById("l3").innerHTML = "2";
+                document.getElementById("n3").innerHTML = three;
+                t = out13();
+                document.getElementById("l2").innerHTML = "1";
+                document.getElementById("n2").innerHTML = two;
+                t = out22();
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = one;
+                t = out11();
+
+            }
+        }
+    </script>
+
+</body>

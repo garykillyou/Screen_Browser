@@ -1,0 +1,26 @@
+body {
+    height: 500px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+#top {
+    height: 300px;
+    width: 100%;
+}
+
+#content {
+    height: 200px;
+}
+
+.pic {
+    margin-right: 40%;
+    margin-left: 40%;
+    text-align: center;
+    transition: 1s ease-in-out;
+}
+
+.pic:hover {
+    transform: scale(1.5);
+}

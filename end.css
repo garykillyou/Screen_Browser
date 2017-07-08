@@ -1,0 +1,38 @@
+body {
+    margin-top: -90px;
+    background: Aqua;
+}
+
+#top {
+    height: 170px;
+}
+
+#centent {
+    height: 250px;
+    text-align: center;
+}
+
+table,
+th,
+td {
+    border-style: solid;
+    border-color: red;
+}
+
+.w1 {
+    font-size: 25px;
+    font-family: Microsoft JhengHei;
+    font-weight: bold;
+}
+
+.w2 {
+    font-size: 25px;
+    font-family: Microsoft JhengHei;
+    font-weight: bold;
+}
+
+#foot {
+    height: 80px;
+    width: 100%;
+    text-align: center;
+}

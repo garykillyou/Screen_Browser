@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<html>
+
+<head>
+    <link rel="icon" href="picture/icon.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="end.css">
+    <title>Sport B@ttle</title>
+
+    <script>
+        function getValue(varname) {
+            var url = window.location.href;
+            var qparts = url.split("?");
+            if (qparts.length == 0) {
+                return "";
+            }
+            var query = qparts[1];
+            var vars = query.split("&");
+            var value = "";
+            for (i = 0; i < vars.length; i++) {
+                var parts = vars[i].split("=");
+                if (parts[0] == varname) {
+                    value = parts[1];
+                    break;
+                }
+            }
+            return value;
+        }
+
+        function change2game_select() {
+            location.href = "game_select.html?key=" + getValue("key");
+        }
+    </script>
+</head>
+
+<body>
+    <div id="top">
+        <img src="picture/Clear.png" alt="End" height="300px" width="700px" style="display:block; margin: 100px auto auto;">
+    </div>
+    <div id="content">
+        <br>
+        <br>
+        <table align="center" cellpadding="30" width="700" id="tab">
+            <tr>
+                <th class="w1">名次</th>
+                <th class="w1">玩家</th>
+                <th class="w1">完成時間</th>
+            </tr>
+            <tr>
+                <th class="w1" id="l1"> 1 </th>
+                <th class="w2" id="n1"></th>
+                <th class="w2" id="t1"></th>
+            </tr>
+            <tr>
+                <th class="w1" id="l2"> 2 </th>
+                <th class="w2" id="n2"></th>
+                <th class="w2" id="t2"></th>
+            </tr>
+            <tr>
+                <th class="w1" id="l3"> 3 </th>
+                <th class="w2" id="n3"></th>
+                <th class="w2" id="t3"></th>
+            </tr>
+        </table>
+        <br>
+        <br>
+    </div>
+    <div id="foot">
+        <br>
+        <br>
+        <br>
+        <button style="width:300px;height:60px;font-size:30px;" onclick="change2game_select()"><b>至遊戲選擇</b></button>
+    </div>
+
+    <script>
+        var one = "p1";
+        var two = "p2";
+        var three = "p3"; // 遊玩者名子
+
+        var onet = parseFloat(getValue("player1"));
+        var twot = parseFloat(getValue("player2"));
+        var threet = parseFloat(getValue("player3")); // 時間
+
+
+
+        if (onet > twot) {
+            if (threet > onet) {
+                document.getElementById("l3").innerHTML = "3";
+                document.getElementById("n3").innerHTML = three;
+                document.getElementById("t3").innerHTML = threet;
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = one;
+                document.getElementById("t2").innerHTML = onet;
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = two;
+                document.getElementById("t1").innerHTML = twot;
+            } else if (twot > threet) {
+                document.getElementById("l3").innerHTML = "3";
+                document.getElementById("n3").innerHTML = one;
+                document.getElementById("t3").innerHTML = onet;
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = two;
+                document.getElementById("t2").innerHTML = twot;
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = three;
+                document.getElementById("t1").innerHTML = threet;
+            } else if (twot < threet) {
+                document.getElementById("l3").innerHTML = "3";
+                document.getElementById("n3").innerHTML = one;
+                document.getElementById("t3").innerHTML = onet;
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = three;
+                document.getElementById("t2").innerHTML = threet;
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = two;
+                document.getElementById("t1").innerHTML = twot;
+            } else if (twot == threet) {
+                document.getElementById("l3").innerHTML = "2";
+                document.getElementById("n3").innerHTML = one;
+                document.getElementById("t3").innerHTML = onet;
+                document.getElementById("l2").innerHTML = "1";
+                document.getElementById("n2").innerHTML = two;
+                document.getElementById("t2").innerHTML = twot;
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = three;
+                document.getElementById("t1").innerHTML = threet;
+            } else if (onet == threet) {
+                document.getElementById("l3").innerHTML = "2";
+                document.getElementById("n3").innerHTML = one;
+                document.getElementById("t3").innerHTML = onet;
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = three;
+                document.getElementById("t2").innerHTML = threet;
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = two;
+                document.getElementById("t1").innerHTML = twot;
+            }
+        } else if (twot > threet) {
+            if (threet > onet) {
+                document.getElementById("l3").innerHTML = "3";
+                document.getElementById("n3").innerHTML = two;
+                document.getElementById("t3").innerHTML = twot;
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = three;
+                document.getElementById("t2").innerHTML = threet;
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = one;
+                document.getElementById("t1").innerHTML = onet;
+            } else if (onet > threet) {
+                document.getElementById("l3").innerHTML = "3";
+                document.getElementById("n3").innerHTML = two;
+                document.getElementById("t3").innerHTML = twot;
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = one;
+                document.getElementById("t2").innerHTML = onet;
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = three;
+                document.getElementById("t1").innerHTML = threet;
+            } else if (onet == threet) {
+                document.getElementById("l3").innerHTML = "2";
+                document.getElementById("n3").innerHTML = two;
+                document.getElementById("t3").innerHTML = twot;
+                document.getElementById("l2").innerHTML = "1";
+                document.getElementById("n2").innerHTML = one;
+                document.getElementById("t2").innerHTML = onet;
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = three;
+                document.getElementById("t1").innerHTML = threet;
+            } else if (onet == twot) {
+                document.getElementById("l3").innerHTML = "2";
+                document.getElementById("n3").innerHTML = two;
+                document.getElementById("t3").innerHTML = twot;
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = one;
+                document.getElementById("t2").innerHTML = onet;
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = three;
+                document.getElementById("t1").innerHTML = threet;
+            }
+        } else if (threet > twot) {
+            if (twot > onet) {
+                document.getElementById("l3").innerHTML = "3";
+                document.getElementById("n3").innerHTML = three;
+                document.getElementById("t3").innerHTML = threet;
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = two;
+                document.getElementById("t2").innerHTML = twot;
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = one;
+                document.getElementById("t1").innerHTML = onet;
+            } else if (onet == twot) {
+                document.getElementById("l3").innerHTML = "2";
+                document.getElementById("n3").innerHTML = three;
+                document.getElementById("t3").innerHTML = threet;
+                document.getElementById("l2").innerHTML = "1";
+                document.getElementById("n2").innerHTML = one;
+                document.getElementById("t2").innerHTML = onet;
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = two;
+                document.getElementById("t1").innerHTML = twot;
+            }
+        } else if (onet == twot) {
+            if ( onet == threet ) {
+                document.getElementById("l3").innerHTML = "1";
+                document.getElementById("n3").innerHTML = three;
+                document.getElementById("t3").innerHTML = threet;
+                document.getElementById("l2").innerHTML = "1";
+                document.getElementById("n2").innerHTML = two;
+                document.getElementById("t2").innerHTML = twot;
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = one;
+                document.getElementById("t1").innerHTML = onet;
+                
+            }
+        } else if (threet == twot) {
+            if ( onet > threet ) {
+                document.getElementById("l3").innerHTML = "2";
+                document.getElementById("n3").innerHTML = one;
+                document.getElementById("t3").innerHTML = onet;
+                document.getElementById("l2").innerHTML = "1";
+                document.getElementById("n2").innerHTML = two;
+                document.getElementById("t2").innerHTML = twot;
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = three;
+                document.getElementById("t1").innerHTML = threet;
+                
+            } else if ( onet < threet ) {
+                document.getElementById("l3").innerHTML = "2";
+                document.getElementById("n3").innerHTML = three;
+                document.getElementById("t3").innerHTML = threet;
+                document.getElementById("l2").innerHTML = "2";
+                document.getElementById("n2").innerHTML = two;
+                document.getElementById("t2").innerHTML = twot;
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = one;
+                document.getElementById("t1").innerHTML = onet;
+                
+            }
+        } else if (onet == twot) {
+            if ( twot < threet ) {
+                document.getElementById("l3").innerHTML = "2";
+                document.getElementById("n3").innerHTML = one;
+                document.getElementById("t3").innerHTML = onet;
+                document.getElementById("l2").innerHTML = "1";
+                document.getElementById("n2").innerHTML = two;
+                document.getElementById("t2").innerHTML = twot;
+                document.getElementById("l1").innerHTML = "1";
+                document.getElementById("n1").innerHTML = one;
+                document.getElementById("t1").innerHTML = onet;
+                
+            }
+        }
+    </script>
+
+</body>

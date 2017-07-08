@@ -1,0 +1,51 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<html>
+
+<head>
+    <script type="text/javascript">
+        var a = 0; // 毫秒
+        var b = 0;
+        var c = 0;
+        var real = 0;
+        var t;
+
+
+        function timedCount() {
+            if (a == 0 && b == 0) document.getElementById('txt').value = "'" + c;
+            else if (a == 0 && b != 0) document.getElementById('txt').value = b + " 秒 " + "'" + c;
+            else if (a != 0 && b == 0) document.getElementById('txt').value = a + "  分 " + "'" + c;
+            else if (a != 0 && b != 0) document.getElementById('txt').value = a + "  分 " + b + " 秒 " + "'" + c;
+            else document.getElementById('txt').value = a + "  分 " + b + " 秒 " + "'" + c;
+
+            c = c + 1;
+            real = real + 1;
+
+            if (c == 100) {
+                b = b + 1;
+                c = 0;
+            }
+
+            if (b == 60) {
+                b = 0;
+                a = a + 1;
+            }
+
+            t = setTimeout("timedCount()", 10);
+        }
+
+        function stopCount() {
+            clearTimeout(t)
+        }
+    </script>
+</head>
+
+<body>
+    <form>
+        <input type="button" value="Start count!" onClick="timedCount()">
+        <input type="text" id="txt">
+        <input type="button" value="Stop count!" onClick="stopCount()">
+    </form>
+</body>
+
+</html>

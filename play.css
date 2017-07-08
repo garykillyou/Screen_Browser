@@ -1,0 +1,34 @@
+
+body{
+    height:1000px;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+    background: linear-gradient(White ,Blue);
+}
+
+#top{
+    height:200px;
+    width: 100%;
+    
+}
+
+#content{
+    height:600px;
+    text-align:center;
+}
+
+#num{
+    font-size:300%;
+}
+
+#foot{
+    height:100px;
+    width: 100%;
+
+}
+
+button{
+    margin-left: 5%;
+}
+

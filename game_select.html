@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<html>
+
+<head>
+
+    <link rel="icon" href="/picture/icon.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="game_select.css">
+    <title>Sport B@ttle</title>
+
+    <script>
+        // 從網址取得varname的值
+        function getValue(varname) {
+            var url = window.location.href;
+            var qparts = url.split("?");
+            if (qparts.length == 0) {
+                return "";
+            }
+            var query = qparts[1];
+            var vars = query.split("&");
+            var value = "";
+            for (i = 0; i < vars.length; i++) {
+                var parts = vars[i].split("=");
+                if (parts[0] == varname) {
+                    value = parts[1];
+                    break;
+                }
+            }
+            return value;
+        }
+
+        function game1() {
+            var url = "game01practice.html?key=" + getValue("key") + "&player1=" + getValue("player1") + "&player2=" + getValue("player2") + "&player3=" + getValue("player3")
+            location.href = url;
+        }
+    </script>
+
+</head>
+
+<body>
+
+    <div id="top">
+        <img src="/picture/game.png" alt="game_select" height="150px" width="350px" style="display:block; margin: auto;">
+        <br>
+        <hr>
+    </div>
+
+    <div id="content">
+        <a>
+            <div id="g1" onclick="game1()">
+                <img src="/picture/select01.png" alt="select01" height="300px" width="600px" style="display:block; margin: auto;"></div>
+        </a>
+    </div>
+
+    <div id="foot">
+
+    </div>
+
+
+</body>
